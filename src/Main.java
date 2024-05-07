@@ -176,7 +176,7 @@ public class Main {
                 System.out.printf("%-15s %-15s %-15s %-15s %-10.2f\n", bus.getBusNumber(), bus.getStartingPoint(), bus.getEndingPoint(), bus.getStartingTime(), bus.getFare());
             }
 
-            // After displaying available buses, proceed with seat reservation
+
             System.out.println("=====================================");
             System.out.println("      Seat Reservation");
             System.out.println("=====================================");
@@ -186,9 +186,9 @@ public class Main {
             String busNumber = scanner.nextLine();
             for (Bus bus : matchingBuses) {
                 if (bus.getBusNumber().equals(busNumber)) {
-                    // Assuming bus.getAvailableSeats() returns a list of available seat numbers
+
                     List<Integer> availableSeats = bus.getAvailableSeats();
-                    // Convert list of available seat numbers to a map where all seats are available
+
                     Map<Integer, Boolean> seatAvailabilityMap = new HashMap<>();
                     for (Integer seat : availableSeats) {
                         seatAvailabilityMap.put(seat, true);
@@ -224,16 +224,16 @@ public class Main {
         reservationSystem.requestSeatChange(customerMobile, busNumber);
     }
 
-    // Method to validate email format
+
     private static boolean isValidEmail(String email) {
-        // Regular expression for email validation
+
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
 
-    // Method to validate phone number format
+
     private static boolean isValidPhoneNumber(String phoneNumber) {
-        // Regular expression for phone number validation
+
         String phoneRegex = "^\\d{10}$"; // 10 digits phone number
         return phoneNumber.matches(phoneRegex);
     }

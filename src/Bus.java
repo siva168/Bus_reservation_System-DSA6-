@@ -24,7 +24,7 @@ public class Bus {
         this.endingPoint = endingPoint;
         this.startingTime = startingTime;
         this.fare = fare;
-        this.seats = new boolean[totalSeats +1]; // Initialize seats array
+        this.seats = new boolean[totalSeats +1];
         //Arrays.fill(seats, true);
     }
 
@@ -54,16 +54,16 @@ public class Bus {
 
     public boolean reserveSeat(int seatNumber) {
         if (seatNumber >= 1 && seatNumber <= totalSeats && seatAvailability.get(seatNumber - 1)) {
-            seatAvailability.set(seatNumber - 1, false); // Mark seat as unavailable
-            return true; // Seat reserved successfully
+            seatAvailability.set(seatNumber - 1, false);
+            return true;
         } else {
-            return false; // Seat not available or invalid seat number
+            return false;
         }
     }
 
     public boolean cancelReservation(int seatNumber) {
         if (seatNumber >= 1 && seatNumber <= totalSeats && !seatAvailability.get(seatNumber - 1)) {
-            seatAvailability.set(seatNumber - 1, true); // Mark seat as available
+            seatAvailability.set(seatNumber - 1, true);
             return true; // Reservation canceled successfully
         }
         return false; // Invalid seat number or seat already available
@@ -73,7 +73,7 @@ public class Bus {
         List<Integer> availableSeats = new ArrayList<>();
         for (int i = 0; i < totalSeats; i++) {
             if (seatAvailability.get(i)) {
-                availableSeats.add(i + 1); // Adding 1 to convert from index to seat number
+                availableSeats.add(i + 1);
             }
         }
         return availableSeats;

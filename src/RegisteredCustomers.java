@@ -22,7 +22,7 @@ public class RegisteredCustomers {
 
     public void addCustomer(Customer customer) {
         Node newNode = new Node(customer);
-        if (head == null) { // If the list is empty
+        if (head == null) {
             head = newNode;
             tail = newNode;
         } else {
@@ -36,7 +36,7 @@ public class RegisteredCustomers {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid customer index");
         }
-        // Traverse the list from the head to find the customer at the specified index
+
         Node current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;

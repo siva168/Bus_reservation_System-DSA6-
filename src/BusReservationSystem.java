@@ -50,7 +50,7 @@ public class BusReservationSystem {
             System.out.println("Available seats: ");
             for (Map.Entry<Integer, Boolean> entry : seatAvailabilityMap.entrySet()) {
                 if (entry.getValue()) {
-                    System.out.print(entry.getKey() + " "); // Display available seat numbers
+                    System.out.print(entry.getKey() + " ");
                 }
             }
             System.out.println();
@@ -112,7 +112,7 @@ public class BusReservationSystem {
                         }
                     }
                 }
-                // Remove the reservation from the list after the loop to avoid ConcurrentModificationException
+
                 if (reservationToRemove != null) {
                     customerReservations.remove(reservationToRemove);
                     System.out.println("Reservation removed from the list.");
