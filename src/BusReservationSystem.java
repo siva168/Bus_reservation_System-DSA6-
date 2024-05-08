@@ -39,7 +39,6 @@ public class BusReservationSystem {
     }
 
     // Reserve seat
-    // Reserve seat
     public void reserveSeat(String customerMobile, String busNumber, Map<Integer, Boolean> seatAvailabilityMap) {
         Customer customer = customers.get(customerMobile);
         Bus bus = buses.get(busNumber);
@@ -48,10 +47,14 @@ public class BusReservationSystem {
             System.out.println("             Seat Reservation");
             System.out.println("==============================================");
             System.out.println("Available seats: ");
-            for (Map.Entry<Integer, Boolean> entry : seatAvailabilityMap.entrySet()) {
-                if (entry.getValue()) {
-                    System.out.print(entry.getKey() + " ");
+            if (!seatAvailabilityMap.isEmpty()) {
+                for (Map.Entry<Integer, Boolean> entry : seatAvailabilityMap.entrySet()) {
+                    if (entry.getValue()) {
+                        System.out.print(entry.getKey() + " ");
+                    }
                 }
+            } else {
+                System.out.println("No seats available.");
             }
             System.out.println();
             System.out.println();
@@ -62,6 +65,10 @@ public class BusReservationSystem {
                 return;
             }
             List<Integer> availableSeats = bus.getAvailableSeats();
+            if (availableSeats.isEmpty()) {
+                System.out.println("Not enough seats available.");
+                return;
+            }
             if (numSeats > availableSeats.size()) {
                 System.out.println("Not enough seats available.");
                 return;
@@ -88,15 +95,13 @@ public class BusReservationSystem {
         }
     }
 
-
-
     // Cancel reservation
     public void cancelReservation(String customerMobile, String busNumber) {
         Customer customer = customers.get(customerMobile);
         Bus bus = buses.get(busNumber);
         if (customer != null && bus != null) {
             List<Reservation> customerReservations = reservations.get(customerMobile);
-            if (customerReservations != null) {
+            if (customerReservations != null && !customerReservations.isEmpty()) {
                 Reservation reservationToRemove = null;
                 for (Reservation reservation : customerReservations) {
                     if (reservation.getBus().equals(bus)) {
@@ -131,21 +136,23 @@ public class BusReservationSystem {
         System.out.println("==============================================");
         System.out.println("              Reservations                    ");
         System.out.println("==============================================");
-        System.out.println("Reservations:");
-        for (Map.Entry<String, List<Reservation>> entry : reservations.entrySet()) {
-            String customerMobile = entry.getKey();
-            List<Reservation> customerReservations = entry.getValue();
-            System.out.println("Customer Mobile Number: " + customerMobile);
-            for (Reservation reservation : customerReservations) {
-                System.out.println("Bus Number: " + reservation.getBus().getBusNumber());
-                System.out.println("Seat Number: " + reservation.getSeatNumber());
-
+        if (reservations.isEmpty()) { // Added isEmpty() check
+            System.out.println("No reservations found.");
+        } else {
+            System.out.println("Reservations:");
+            for (Map.Entry<String, List<Reservation>> entry : reservations.entrySet()) {
+                String customerMobile = entry.getKey();
+                List<Reservation> customerReservations = entry.getValue();
+                System.out.println("Customer Mobile Number: " + customerMobile);
+                for (Reservation reservation : customerReservations) {
+                    System.out.println("Bus Number: " + reservation.getBus().getBusNumber());
+                    System.out.println("Seat Number: " + reservation.getSeatNumber());
+                }
             }
         }
     }
 
     public void notifyCustomer(Customer customer, String message) {
-
         System.out.println("Notification sent to " + customer.getName() + ": " + message);
     }
 
@@ -155,7 +162,7 @@ public class BusReservationSystem {
         Bus bus = buses.get(busNumber);
         if (customer != null && bus != null) {
             List<Reservation> customerReservations = reservations.get(customerMobile);
-            if (customerReservations != null) {
+            if (customerReservations != null && !customerReservations.isEmpty()) {
                 for (Reservation reservation : customerReservations) {
                     if (reservation.getBus().equals(bus)) {
                         seatChangeQueue.push(reservation); // Using Stack for seat change requests
@@ -168,6 +175,7 @@ public class BusReservationSystem {
             System.out.println("Seat change request failed: Customer or bus not found.");
         }
     }
+
     public List<Bus> getAllBuses() {
         return new ArrayList<>(buses.values());
     }
@@ -185,3 +193,4 @@ public class BusReservationSystem {
         return false;
     }
 }
+
